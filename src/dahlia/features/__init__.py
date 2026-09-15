@@ -3,11 +3,6 @@
 Same shape on add and inspect, with read-only computed fields appended on
 inspect (marked here on the model).
 
-Implemented kinds:
-  Sketch (in the sketch package — re-exported), Extrude, CutExtrude, Revolve,
-  CutRevolve, Fillet, Chamfer, LinearPattern, CircularPattern, Sweep,
-  CutSweep, Helix, Combine, Split, RefPlane, RefAxis.
-
 Per-kind classes / factories live in their respective submodules; this
 `__init__` re-exports the public surface.
 """

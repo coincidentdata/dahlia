@@ -76,9 +76,10 @@ Pick points are creation hints; editing them is outside the mate contract.
 - Per-file methods on `File`: `add_feature`, `select`, `view`,
   `inspect_feature`, `edit_feature`, `edit_dimension`, `delete_feature`, `set_rollback`, `set_units`,
   `set_bodies`, `get_image`, `save`, `close`.
-- Feature factories include `sketch`, `extrude`, `cut_extrude`, `revolve`, `loft`,
-  `cut_loft`, `fillet`, `chamfer`, `linear_pattern`, `circular_pattern`, `mirror`,
-  `shell`, `draft`, and `rib`.
+- Feature factories and typed options:
+  [public exports](../src/dahlia/__init__.py),
+  [feature modules](../src/dahlia/features/), and
+  [sketch builders](../src/dahlia/sketch/).
 - Sketch builder methods: `add_line`, `add_circle`, `add_arc`, `add_point`,
   `add_rectangle`, `add_polygon`, `add_constraint`, `entity(name)`.
 - Math helpers: `circle_points`, `linspace`, `midpoint`, `offset_points`.
@@ -106,7 +107,13 @@ handles to an old name must be reacquired after a rename.
 `f.get_image()` defaults to `Isometric`. Explicit orientations use the native
 capitalization, such as `Front`, `Top`, and `Right`.
 
-## Ribs
+## Feature-specific behavior and limitations
+
+These notes cover special behavior and current limitations. For the full
+feature API and parameter definitions, see the
+[feature modules](../src/dahlia/features/).
+
+### Ribs
 
 `rib(sketch=..., thickness=...)` grows a rib parallel to its driving sketch.
 Use `direction="NormalToSketch"` to grow it normal to the sketch and
@@ -119,7 +126,7 @@ material/draft direction; `body` optionally selects the target body.
 Edits support these settings. The driving sketch can be edited in place, but
 switching to a different sketch requires a new rib.
 
-## Drafts
+### Drafts
 
 `draft(angle=..., neutral_plane=..., faces=[...])` creates a neutral-plane
 draft. Angles are in radians. `kind="PartingLine"` or `kind="Step"` instead
@@ -130,7 +137,7 @@ support `allow_reduced_angle`. Edits preserve the feature and its draft kind.
 The native data API's single draft angle is supported; two-direction parting-line
 drafts are not covered.
 
-## Shells
+### Shells
 
 `shell(thickness=..., faces=[...])` removes the selected faces and hollows the
 remaining solid. An empty `faces` list creates a closed shell. `outward=True`
@@ -149,7 +156,7 @@ and closing the last opening before mutation; create a new shell for those cases
 These are implementation limits pending setter-order and intermediate-commit
 checks, not proof that SolidWorks cannot perform those edits.
 
-## Lofts
+### Lofts
 
 `loft` creates a boss loft and `cut_loft` removes material between at least two
 ordered profiles. Pass already-added Sketch objects, feature names, or typed/raw
@@ -178,7 +185,7 @@ verified, and clearing an existing centerline raises an error.
 Cut-loft fragments are retained; the separate
 `drop_bodies` workflow is currently supported by the other cut types.
 
-## Mirrors
+### Mirrors
 
 `mirror` accepts feature, face, or body definitions in `seeds`. Body seeds cannot
 be mixed with features or faces. Both planes can be reference planes or planar

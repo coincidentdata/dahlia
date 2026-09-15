@@ -21,6 +21,8 @@ All commands below run from this repository's root.
 - Import public factories and constants from `dahlia`. Start with
   [examples/quickstart.py](examples/quickstart.py); the
   [turbofan demo](examples/turbofan_demo.py) covers a complete assembly.
+- Find the complete public API in [src/dahlia/__init__.py](src/dahlia/__init__.py).
+  Feature and mate modules define their factory parameters and typed options.
 - Call `connect()` before operations that talk to CAD.
 - All lengths are meters and all angles radians. Use `MM`, `INCH`, and `DEG`
   multipliers. `set_units()` changes display units only.
@@ -39,11 +41,12 @@ All commands below run from this repository's root.
 
 ## Editing the client
 
-- Public exports: `src/dahlia/__init__.py`.
+- Public exports: [src/dahlia/__init__.py](src/dahlia/__init__.py).
 - Document operations: `src/dahlia/file.py`; connection and transport:
   `src/dahlia/session.py` and `src/dahlia/transport.py`.
-- Feature models/factories: `src/dahlia/features/`; sketch builders:
-  `src/dahlia/sketch.py`; mate models/factories: `src/dahlia/mates/`.
+- Feature models/factories: [src/dahlia/features/](src/dahlia/features/);
+  sketch builders: [src/dahlia/sketch/](src/dahlia/sketch/);
+  mate models/factories: [src/dahlia/mates/](src/dahlia/mates/).
 - Keep public methods and validation consistent with the existing typed models.
   The native backend determines which operations can actually execute.
 - Installer packaging lives in `installer/` and consumes compiled payloads.
