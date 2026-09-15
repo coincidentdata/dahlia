@@ -1,13 +1,13 @@
 # Dahlia
 
-<img src="assets/dahlia-logo.png" alt="Dahlia single-flower logo" width="160">
+<img src="https://raw.githubusercontent.com/coincidentdata/dahlia/main/assets/dahlia-logo.png" alt="Dahlia single-flower logo" width="160">
 
 Our Python library for interacting with industry CAD software, starting with SOLIDWORKS.
 
 Create and edit parts, assemble components with mates, inspect geometry, and
 export native CAD files, STEP, STL, and images from Python.
 
-[Installation](#installation) · [Usage guide](docs/usage.md) · [Examples](examples/README.md) · [Agent instructions](AGENTS.md)
+[Installation](#installation) · [Usage guide](https://github.com/coincidentdata/dahlia/blob/main/docs/usage.md) · [Examples](https://github.com/coincidentdata/dahlia/tree/main/examples) · [Agent instructions](https://github.com/coincidentdata/dahlia/blob/main/AGENTS.md)
 
 ## Installation
 
@@ -27,22 +27,21 @@ Enable its startup checkbox to load it automatically.
 
 Download the installer and SHA-256 file from the
 [v0.1.0 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.1.0).
-See [installer details](installer/README.md) for preview status, requirements,
+See [installer details](https://github.com/coincidentdata/dahlia/blob/main/installer/README.md) for preview status, requirements,
 silent installation, and troubleshooting.
 
 ### 2. Install the Python client
 
-From the root of this checkout, with [uv](https://docs.astral.sh/uv/) installed:
+In a Python 3.12 environment:
 
 ```powershell
-uv sync --locked
+python -m pip install dahlia-cad
 ```
 
-Or use Python 3.12 and pip:
+Or add it to a project with [uv](https://docs.astral.sh/uv/):
 
 ```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e .
+uv add dahlia-cad
 ```
 
 The distribution is named `dahlia-cad`; the Python import is `dahlia`.
@@ -54,11 +53,11 @@ Creating or editing CAD requires the live add-in.
 With SOLIDWORKS open and the add-in enabled:
 
 ```powershell
-uv run python -c "import dahlia; dahlia.connect(); print([f.name for f in dahlia.list_files()])"
+python -c "import dahlia; dahlia.connect(); print([f.name for f in dahlia.list_files()])"
 ```
 
 An empty list is normal when no documents are open. A connection error means
-the native setup needs attention; see [troubleshooting](installer/README.md#troubleshooting).
+the native setup needs attention; see [troubleshooting](https://github.com/coincidentdata/dahlia/blob/main/installer/README.md#troubleshooting).
 
 ## First part
 
@@ -78,10 +77,11 @@ print(part.view())
 Lengths are **meters** and angles are **radians**. Use `MM`, `INCH`, and
 `DEG` as multipliers. Document display units do not change these API units.
 
-For a complete script that also saves a native part, STEP file, and PNG:
+Download [quickstart.py](https://raw.githubusercontent.com/coincidentdata/dahlia/main/examples/quickstart.py)
+for a complete script that also saves a native part, STEP file, and PNG:
 
 ```powershell
-uv run python examples/quickstart.py
+python quickstart.py
 ```
 
 Each run writes to a new directory under `outputs/quickstart/` and uses a
@@ -89,9 +89,10 @@ unique document name.
 
 ## Development and agents
 
-Start with [AGENTS.md](AGENTS.md). API conventions, geometry references,
-assemblies, and supported-feature limitations are in the [usage guide](docs/usage.md).
-For pull requests and the review process, see [CONTRIBUTING.md](CONTRIBUTING.md).
+From a checkout, start with [AGENTS.md](https://github.com/coincidentdata/dahlia/blob/main/AGENTS.md).
+API conventions, geometry references, assemblies, and supported-feature limitations
+are in the [usage guide](https://github.com/coincidentdata/dahlia/blob/main/docs/usage.md).
+For pull requests and the review process, see [CONTRIBUTING.md](https://github.com/coincidentdata/dahlia/blob/main/CONTRIBUTING.md).
 
 ```powershell
 uv sync --locked
@@ -104,7 +105,7 @@ replace live CAD verification.
 
 ## License
 
-[Dahlia Community License 1.0](LICENSE) permits free use, including commercial
+[Dahlia Community License 1.0](https://github.com/coincidentdata/dahlia/blob/main/LICENSE) permits free use, including commercial
 use, unless you and your affiliates have more than **USD 10 million in combined
 revenue over the preceding twelve months**. Above that threshold, a separate
 commercial license agreement is required before use, including internal use.

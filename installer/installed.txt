@@ -12,13 +12,9 @@ for the complete terms.
 1. Start SOLIDWORKS.
 2. Open Tools > Add-Ins and enable "Dahlia for SOLIDWORKS".
    Select its startup checkbox to load it automatically for your Windows user.
-3. Download the matching Python wheel from:
+3. In your Python 3.12 environment, install the matching Python client:
 
-   https://github.com/coincidentdata/dahlia/releases/tag/v0.1.0
-
-   In your Python 3.12 environment, from the download directory, run:
-
-   python -m pip install dahlia_cad-0.1.0-py3-none-any.whl
+   python -m pip install dahlia-cad==0.1.0
 
 4. Verify the connection:
 
