@@ -26,7 +26,7 @@ Start SOLIDWORKS and enable **Dahlia for SOLIDWORKS** under **Tools > Add-Ins**.
 Enable its startup checkbox to load it automatically.
 
 Download the installer and SHA-256 file from the
-[v0.1.0 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.1.0).
+[v0.1.1 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.1.1).
 See [installer details](https://github.com/coincidentdata/dahlia/blob/main/installer/README.md) for preview status, requirements,
 silent installation, and troubleshooting.
 
@@ -44,7 +44,6 @@ Or add it to a project with [uv](https://docs.astral.sh/uv/):
 uv add dahlia-cad
 ```
 
-The distribution is named `dahlia-cad`; the Python import is `dahlia`.
 The client can be imported and its unit tests run without SOLIDWORKS.
 Creating or editing CAD requires the live add-in.
 

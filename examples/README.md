@@ -26,6 +26,7 @@ Builds an editable turbofan with a swept intake fan, two booster rows, six
 high-pressure compressor rows, an annular combustor, two high-pressure turbine
 rows, four low-pressure turbine rows, and interleaved stationary guide vanes.
 Its intact housings are transparent; views use Shaded with Edges.
+The assembly stays framed while components appear, without repeated camera moves.
 
 The default assembly contains 38 component instances and 39 standard mates.
 Its 29 blade rows reuse 12 row designs, giving the compressor and turbine a

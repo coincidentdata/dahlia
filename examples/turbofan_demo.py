@@ -272,14 +272,15 @@ def hero_view(document):
     model.ShowNamedView2("", 1)
     model.ActiveView.RotateAboutCenter(0.06, -0.70)
     model.ViewZoomtofit2()
-    model.WindowRedraw()
+    model.GraphicsRedraw2()
+    return model
 
 
 def assemble(paths):
     print("Assembling housings, independent spools, and blade rows", flush=True)
     assembly = create_file(kind="assembly")
     housing = assembly.add_component(paths["Nacelle"], fixed=True, color=COLORS["Nacelle"])
-    hero_view(assembly)
+    model = hero_view(assembly)
     stationary = {"Nacelle": housing}
     for name, station in (("IntakeLip", 0), ("CoreHousing", 0), ("Combustor", 0),
                           ("FrontFrame", -0.38), ("RearFrame", -3.84), ("CoreNozzle", 0)):
@@ -287,7 +288,7 @@ def assemble(paths):
         component = assembly.add_component(paths[name], transform=transform((station, 0, 0)), color=color)
         assembly.add_feature(mates.lock(housing, component, name=f"{name}ToNacelle"))
         stationary[name] = component
-        hero_view(assembly)
+        model.GraphicsRedraw2()
     shafts = {}
     for spool, name in (("low", "LowPressureShaft"), ("high", "HighPressureShaft")):
         shaft = assembly.add_component(paths[name], color=COLORS["shaft"])
@@ -296,7 +297,7 @@ def assemble(paths):
         assembly.add_feature(mates.coincident(housing.ref(RIGHT), shaft.ref(RIGHT),
             alignment="aligned", name=f"{name}AxialLocation"))
         shafts[spool] = shaft
-        hero_view(assembly)
+        model.GraphicsRedraw2()
     for stage in (*ROTORS, *STATORS):
         hot = stage.stations[0] < -2.4
         color = COLORS.get(stage.name, COLORS[("turbine" if hot else "compressor")
@@ -305,9 +306,9 @@ def assemble(paths):
         for index, station in enumerate(stage.stations, start=1):
             component = assembly.add_component(paths[stage.name], transform=transform((station, 0, 0)), color=color)
             assembly.add_feature(mates.lock(target, component, name=f"{stage.name}{index}Attachment"))
-            hero_view(assembly)
+            model.GraphicsRedraw2()
     assembly.rebuild()
-    hero_view(assembly)
+    model.GraphicsRedraw2()
     return assembly
 
 

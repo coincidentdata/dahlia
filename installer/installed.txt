@@ -14,7 +14,7 @@ for the complete terms.
    Select its startup checkbox to load it automatically for your Windows user.
 3. In your Python 3.12 environment, install the matching Python client:
 
-   python -m pip install dahlia-cad==0.1.0
+   python -m pip install dahlia-cad==0.1.1
 
 4. Verify the connection:
 
