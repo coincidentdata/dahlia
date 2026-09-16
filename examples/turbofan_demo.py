@@ -95,11 +95,9 @@ def polygon(part, name, points, plane=FRONT):
 
 def meridian(part, name, points, *, merge=True):
     profile = polygon(part, name + "Profile", points)
-    result = part.add_feature(revolve(
+    return part.add_feature(revolve(
         sketch=profile, axis=feature_ref("EngineAxis"), merge=merge, name=name,
     ))
-    hero_view(part)
-    return result
 
 
 def engine_axis(part):
@@ -164,12 +162,10 @@ def blade_stage(part, stage, count):
             section.append((x, -z))
         profiles.append(polygon(part, f"BladeSection{index + 1}", section, feature_ref(plane_name)))
     blade = part.add_feature(loft(profiles=profiles, name="SweptTwistedBlade"))
-    hero_view(part)
     part.add_feature(circular_pattern(
         seeds=[feature_ref(blade)], axis=feature_ref("EngineAxis"),
         total_angle=math.tau, count=count, geometry_pattern=True, name="BladeRow",
     ))
-    hero_view(part)
     if fan:
         trim = polygon(part, "CylindricalTipEnvelope", [(-0.20, stage.tip), (0.20, stage.tip),
             (0.20, stage.tip + 0.30), (-0.20, stage.tip + 0.30)])
@@ -258,29 +254,13 @@ def core_nozzle(part):
         (-4.12, 0.278), (-3.82, 0.443), (-3.72, 0.461)])
 
 
-def hero_view(document):
+def assemble(paths):
     import win32com.client
 
-    app = win32com.client.GetActiveObject("SldWorks.Application")
-    path = document.view()["path"]
-    model = app.GetOpenDocumentByName(path) if path else app.ActiveDoc
-    if model is None:
-        raise RuntimeError(f"Native document unavailable: {document.name}")
-    model.SetUserPreferenceToggle(198, True)
-    model.ActiveView.DisplayMode = 5
-    model.ClearSelection2(True)
-    model.ShowNamedView2("", 1)
-    model.ActiveView.RotateAboutCenter(0.06, -0.70)
-    model.ViewZoomtofit2()
-    model.GraphicsRedraw2()
-    return model
-
-
-def assemble(paths):
     print("Assembling housings, independent spools, and blade rows", flush=True)
     assembly = create_file(kind="assembly")
+    model = win32com.client.GetActiveObject("SldWorks.Application").ActiveDoc
     housing = assembly.add_component(paths["Nacelle"], fixed=True, color=COLORS["Nacelle"])
-    model = hero_view(assembly)
     stationary = {"Nacelle": housing}
     for name, station in (("IntakeLip", 0), ("CoreHousing", 0), ("Combustor", 0),
                           ("FrontFrame", -0.38), ("RearFrame", -3.84), ("CoreNozzle", 0)):
@@ -341,7 +321,6 @@ def build(output):
         engine_axis(part)
         author(part)
         part.rebuild()
-        hero_view(part)
         path = output / f"{label}_{run_id}.SLDPRT"
         part.save(str(path))
         paths[label] = path
