@@ -104,14 +104,3 @@ uv build
 
 The tests validate the Python client without a SOLIDWORKS session; they do not
 replace live CAD verification.
-
-## License
-
-[Dahlia Community License 1.0](https://github.com/coincidentdata/dahlia/blob/main/LICENSE) permits free use, including commercial
-use, unless you and your affiliates have more than **USD 10 million in combined
-revenue over the preceding twelve months**. Above that threshold, a separate
-commercial license agreement is required before use, including internal use.
-Contact [hello@coincidentdata.com](mailto:hello@coincidentdata.com).
-
-The Python client, C# SOLIDWORKS add-in, and core are source-available under
-the same license. Prebuilt Windows installers are also provided.
