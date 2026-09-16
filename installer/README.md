@@ -5,8 +5,8 @@ dependencies, type library, and Microsoft .NET 8 Desktop Runtime.
 SOLIDWORKS and Python are installed separately. SOLIDWORKS 2026 is the
 currently verified target.
 
-The add-in implementation is distributed as binaries. This directory contains
-the installer packaging and checks; it does not contain the C# implementation.
+The C# core and add-in source are in [solidworks/](../solidworks/).
+This directory contains installer packaging and checks.
 The [Dahlia Community License](../LICENSE) is shown during installation and
 installed as `LICENSE.txt`. Third-party components retain their own notices.
 
@@ -56,7 +56,16 @@ Read the license before explicitly accepting it for unattended installation:
 - **Runtime installation fails:** inspect the installer log. Setup reports
   prerequisite errors and stops before registering the plugin.
 
-## Build an installer from compiled binaries
+## Build an installer
+
+First build the C# source following [the SOLIDWORKS build guide](../solidworks/README.md):
+
+```powershell
+.\solidworks\build.ps1 -SolidWorksInteropPath 'C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\api\redist'
+.\installer\build.ps1 -PayloadDirectory .\solidworks\obj\payload -IsccPath 'C:\Program Files\Inno Setup 7\ISCC.exe'
+```
+
+### Package an existing binary payload
 
 Packaging requires Windows and Inno Setup 7.1.0. It does not need the .NET SDK,
 a C# checkout, or a running SOLIDWORKS session.

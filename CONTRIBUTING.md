@@ -15,6 +15,11 @@ The Python tests run without SOLIDWORKS. For live CAD changes, describe what you
 tested and the SOLIDWORKS version used. Maintainers verify native behavior
 internally when needed.
 
+For C# changes, follow [the SOLIDWORKS build guide](solidworks/README.md).
+The native build requires Windows, the .NET 8 SDK, and SOLIDWORKS interop assemblies.
+Keep the Python wire format compatible and include reproduction scripts for changes
+that require live SOLIDWORKS verification.
+
 Maintainers integrate accepted changes into the development repository, run the
 relevant checks, and publish them here. A pull request may therefore be closed
 with a link to the published commit instead of being merged through GitHub.

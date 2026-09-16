@@ -1,0 +1,20 @@
+<Project>
+  <ItemGroup>
+    <Reference Include="SolidWorks.Interop.sldworks">
+      <HintPath>$(SolidWorksInteropPath)\SolidWorks.Interop.sldworks.dll</HintPath>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swcommands">
+      <HintPath>$(SolidWorksInteropPath)\SolidWorks.Interop.swcommands.dll</HintPath>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swconst">
+      <HintPath>$(SolidWorksInteropPath)\SolidWorks.Interop.swconst.dll</HintPath>
+    </Reference>
+    <Reference Include="SolidWorks.Interop.swpublished">
+      <HintPath>$(SolidWorksInteropPath)\SolidWorks.Interop.swpublished.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Target Name="ValidateSolidWorksInteropPath" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="!Exists('$(SolidWorksInteropPath)\SolidWorks.Interop.sldworks.dll')"
+           Text="Set SolidWorksInteropPath to your SOLIDWORKS installation's api\redist directory. See solidworks/README.md." />
+  </Target>
+</Project>

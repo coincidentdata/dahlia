@@ -91,6 +91,9 @@ unique document name.
 From a checkout, start with [AGENTS.md](https://github.com/coincidentdata/dahlia/blob/main/AGENTS.md).
 API conventions, geometry references, assemblies, and supported-feature limitations
 are in the [usage guide](https://github.com/coincidentdata/dahlia/blob/main/docs/usage.md).
+The C# SOLIDWORKS core and add-in are in
+[solidworks/](https://github.com/coincidentdata/dahlia/tree/main/solidworks), with
+[source build instructions](https://github.com/coincidentdata/dahlia/blob/main/solidworks/README.md).
 For pull requests and the review process, see [CONTRIBUTING.md](https://github.com/coincidentdata/dahlia/blob/main/CONTRIBUTING.md).
 
 ```powershell
@@ -110,5 +113,5 @@ revenue over the preceding twelve months**. Above that threshold, a separate
 commercial license agreement is required before use, including internal use.
 Contact [hello@coincidentdata.com](mailto:hello@coincidentdata.com).
 
-The Python client is source-available. The SOLIDWORKS add-in and core are
-distributed as compiled binaries under the same license.
+The Python client, C# SOLIDWORKS add-in, and core are source-available under
+the same license. Prebuilt Windows installers are also provided.

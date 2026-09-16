@@ -10,6 +10,12 @@ htmlcov/
 dist/
 outputs/
 installer/obj/
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.binlog
 *.exe
 *.dll
 *.pdb

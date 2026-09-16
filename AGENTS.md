@@ -51,3 +51,18 @@ All commands below run from this repository's root.
   The native backend determines which operations can actually execute.
 - Installer packaging lives in `installer/` and consumes compiled payloads.
   Keep executables, DLLs, debug symbols, recordings, and generated models out of commits.
+
+## Editing the SOLIDWORKS backend
+
+- Read [solidworks/README.md](solidworks/README.md) for prerequisites and build commands.
+- Native document operations: `solidworks/core/Session.cs`, `solidworks/core/File*.cs`.
+  Feature handlers: `solidworks/core/Handlers/`; mate handlers: `solidworks/core/Handlers/Mates/`.
+  Geometry references: `solidworks/core/Definitions/`.
+- The COM entry point and dispatch queue are in `solidworks/plugin/Main.cs`.
+  Keep SOLIDWORKS calls on its application thread.
+- Build with `solidworks/build.ps1`, then package with `installer/build.ps1`.
+  Building does not install the add-in or modify the running SOLIDWORKS session.
+- Preserve the COM identity and Python wire format when changing implementation.
+  Keep lengths in meters and angles in radians. Surface unsupported inputs and native errors.
+- Maintainers run native integration checks separately. A successful build or Python
+  unit test does not establish that a native feature works in SOLIDWORKS.
