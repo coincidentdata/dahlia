@@ -1,0 +1,31 @@
+Dahlia for SOLIDWORKS
+
+The SOLIDWORKS add-in and its core library are installed together.
+
+Dahlia Community License 1.0 applies to the Python client and this plugin.
+Use is free, including commercial use, unless you and your affiliates have more
+than USD 10 million in combined revenue over the preceding twelve months.
+Above that threshold, obtain a separate commercial license agreement from
+hello@coincidentdata.com before use, including internal use. See LICENSE.txt
+for the complete terms.
+
+1. Start SOLIDWORKS.
+2. Open Tools > Add-Ins and enable "Dahlia for SOLIDWORKS".
+   Select its startup checkbox to load it automatically for your Windows user.
+3. In your Python 3.12 environment, install the matching Python client:
+
+   python -m pip install dahlia-cad==0.1.1
+
+4. Verify the connection:
+
+   python -c "import dahlia; dahlia.connect(); print(dahlia.list_files())"
+
+This build targets SOLIDWORKS 2026. Other releases have not been verified.
+Python and SOLIDWORKS are installed separately.
+
+To update, close SOLIDWORKS and run the newer Dahlia installer.
+To remove Dahlia, use Windows Settings > Apps > Installed apps.
+The shared Microsoft .NET runtime is retained when Dahlia is uninstalled.
+
+https://coincidentdata.com
+hello@coincidentdata.com

@@ -1,0 +1,32 @@
+Dahlia Community License 1.0
+
+Copyright (c) 2026 Coincident Data
+
+Permission is hereby granted, free of charge, to any person or entity (the
+"Licensee") obtaining a copy of this software, including the Dahlia Python
+client, compiled SOLIDWORKS plugin and core, and associated documentation
+(collectively, the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following
+conditions:
+
+1. The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software. The Licensee's use of the
+Software must comply with applicable laws and regulations.
+
+2. If the aggregate revenue of the Licensee and its affiliates exceeds
+10 million US dollars (or the equivalent in other currencies) over the
+immediately preceding twelve months, the Licensee must enter into a separate
+commercial license agreement with Coincident Data before using the Software
+or its derivative works for any purpose, including internal use.
+
+3. THE SOFTWARE AND ANY OUTPUT AND RESULTS THEREFROM ARE PROVIDED ON AN "AS IS"
+BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL COINCIDENT DATA OR ITS AFFILIATES OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For any questions regarding this license, please contact hello@coincidentdata.com.
