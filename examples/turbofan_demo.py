@@ -127,7 +127,7 @@ def blade_stage(part, stage, count):
         radius = start_radius + (tip - start_radius) * fraction
         plane_name = f"BladeSectionPlane{index + 1}"
         part.add_feature(ref_plane(
-            references=[TOP], constraints=["Distance"], distance=radius,
+            references=[{"reference": TOP, "constraint": "Distance", "distance": radius}],
             expected_normal=[0, 1, 0], name=plane_name,
         ))
         if fan:
@@ -164,7 +164,7 @@ def blade_stage(part, stage, count):
     blade = part.add_feature(loft(profiles=profiles, name="SweptTwistedBlade"))
     part.add_feature(circular_pattern(
         seeds=[feature_ref(blade)], axis=feature_ref("EngineAxis"),
-        total_angle=math.tau, count=count, geometry_pattern=True, name="BladeRow",
+        direction1={"count": count, "spacing": {"spacing": "Equal", "total_angle": math.tau}}, geometry_pattern=True, name="BladeRow",
     ))
     if fan:
         trim = polygon(part, "CylindricalTipEnvelope", [(-0.20, stage.tip), (0.20, stage.tip),
@@ -235,18 +235,18 @@ def combustor(part):
     profile = sketch(plane=FRONT, name="LinerBossProfile")
     profile.add_circle((-2.15, 0.405), radius=0.012)
     part.add_feature(profile)
-    boss = part.add_feature(extrude(sketch=profile, depth=0.018, both_directions=True, name="LinerBoss"))
+    boss = part.add_feature(extrude(sketch=profile, direction1={"end_condition": {"end_condition": "MidPlane", "distance": 0.036}}, name="LinerBoss"))
     part.add_feature(circular_pattern(seeds=[feature_ref(boss)], axis=feature_ref("EngineAxis"),
-        total_angle=math.tau, count=12, geometry_pattern=True, name="LinerBossRing"))
+        direction1={"count": 12, "spacing": {"spacing": "Equal", "total_angle": math.tau}}, geometry_pattern=True, name="LinerBossRing"))
 
 
 def frame(part, radius):
     meridian(part, "BearingHousing", [(-0.035, 0.070), (0.035, 0.070), (0.035, 0.145), (-0.035, 0.145)])
     profile = polygon(part, "SupportStrutProfile", [(-0.027, 0.135), (0.027, 0.135),
                                                    (0.020, radius), (-0.020, radius)])
-    strut = part.add_feature(extrude(sketch=profile, depth=0.015, both_directions=True, name="SupportStrut"))
+    strut = part.add_feature(extrude(sketch=profile, direction1={"end_condition": {"end_condition": "MidPlane", "distance": 0.030}}, name="SupportStrut"))
     part.add_feature(circular_pattern(seeds=[feature_ref(strut)], axis=feature_ref("EngineAxis"),
-        total_angle=math.tau, count=4, geometry_pattern=True, name="SupportStruts"))
+        direction1={"count": 4, "spacing": {"spacing": "Equal", "total_angle": math.tau}}, geometry_pattern=True, name="SupportStruts"))
 
 
 def core_nozzle(part):

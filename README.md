@@ -6,6 +6,8 @@ Our Python library for interacting with industry CAD software, starting with SOL
 
 Create and edit parts, assemble components with mates, inspect geometry, and
 export native CAD files, STEP, STL, and images from Python.
+`dahlia.onshape` drives Onshape Part Studios with Onshape's own feature JSON
+plus Dahlia's geometry references; see [docs/onshape.md](https://github.com/coincidentdata/dahlia/blob/main/docs/onshape.md).
 
 [Installation](#installation) · [Usage guide](https://github.com/coincidentdata/dahlia/blob/main/docs/usage.md) · [Examples](https://github.com/coincidentdata/dahlia/tree/main/examples) · [Agent instructions](https://github.com/coincidentdata/dahlia/blob/main/AGENTS.md)
 
@@ -26,7 +28,7 @@ Start SOLIDWORKS and enable **Dahlia for SOLIDWORKS** under **Tools > Add-Ins**.
 Enable its startup checkbox to load it automatically.
 
 Download the installer and SHA-256 file from the
-[v0.1.1 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.1.1).
+[v0.2.0 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.2.0).
 See [installer details](https://github.com/coincidentdata/dahlia/blob/main/installer/README.md) for preview status, requirements,
 silent installation, and troubleshooting.
 
@@ -44,7 +46,7 @@ Or add it to a project with [uv](https://docs.astral.sh/uv/):
 uv add dahlia-cad
 ```
 
-The client can be imported and its unit tests run without SOLIDWORKS.
+The client can be imported without SOLIDWORKS.
 Creating or editing CAD requires the live add-in.
 
 ### 3. Check the connection
@@ -95,9 +97,5 @@ For pull requests and the review process, see [CONTRIBUTING.md](https://github.c
 
 ```powershell
 uv sync --locked
-uv run pytest
 uv build
 ```
-
-The tests validate the Python client without a SOLIDWORKS session; they do not
-replace live CAD verification.

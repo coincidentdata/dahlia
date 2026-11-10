@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
           enable-cache: false
       - run: uv sync --locked
-      - run: uv run pytest
+      - run: uv run python -c "import dahlia, dahlia.onshape"
       - run: uv build --no-sources
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:

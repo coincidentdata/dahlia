@@ -13,7 +13,7 @@ installed as `LICENSE.txt`. Third-party components retain their own notices.
 
 Use the installer matching your Dahlia client version. Download the installer,
 SHA-256 file, and Python packages from the
-[v0.1.1 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.1.1).
+[v0.2.0 preview release](https://github.com/coincidentdata/dahlia/releases/tag/v0.2.0).
 Executables are distributed as release assets.
 
 The installer is an unsigned preview. Installation, runtime setup, reinstallation,
@@ -39,7 +39,7 @@ SOLIDWORKS must be closed, and the shared Microsoft runtime is retained.
 Read the license before explicitly accepting it for unattended installation:
 
 ```powershell
-.\Dahlia-SOLIDWORKS-0.1.1-x64-Setup.exe /VERYSILENT /ACCEPTLICENSE=1 /SUPPRESSMSGBOXES /NORESTART /LOG="install.log"
+.\Dahlia-SOLIDWORKS-0.2.0-x64-Setup.exe /VERYSILENT /ACCEPTLICENSE=1 /SUPPRESSMSGBOXES /NORESTART /LOG="install.log"
 ```
 
 ## Troubleshooting

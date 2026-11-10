@@ -1,4 +1,6 @@
 .venv/
+[Bb]lob[Ss]hape/
+.onshape/
 __pycache__/
 *.py[cod]
 *.egg-info/

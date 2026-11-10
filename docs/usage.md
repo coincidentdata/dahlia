@@ -14,8 +14,8 @@ See the [README](../README.md#installation) for setup and the
   for a geometry definition suitable for subsequent feature selections.
 - Geometry definitions are structured data. Use returned references instead of
   inventing face indices or native IDs. Feature options are typed in
-  [`src/dahlia/features/`](../src/dahlia/features/) and mates in
-  [`src/dahlia/mates/`](../src/dahlia/mates/).
+  [`src/dahlia/sldwrks/features/`](../src/dahlia/sldwrks/features/) and mates in
+  [`src/dahlia/sldwrks/mates/`](../src/dahlia/sldwrks/mates/).
 
 ## Assemblies
 
@@ -77,9 +77,9 @@ Pick points are creation hints; editing them is outside the mate contract.
   `inspect_feature`, `edit_feature`, `edit_dimension`, `delete_feature`, `set_rollback`, `set_units`,
   `set_bodies`, `get_image`, `save`, `close`.
 - Feature factories and typed options:
-  [public exports](../src/dahlia/__init__.py),
-  [feature modules](../src/dahlia/features/), and
-  [sketch builders](../src/dahlia/sketch/).
+  [public exports](../src/dahlia/sldwrks/_api.py),
+  [feature modules](../src/dahlia/sldwrks/features/), and
+  [sketch builders](../src/dahlia/sldwrks/sketch/).
 - Sketch builder methods: `add_line`, `add_circle`, `add_arc`, `add_point`,
   `add_rectangle`, `add_polygon`, `add_constraint`, `entity(name)`.
 - Math helpers: `circle_points`, `linspace`, `midpoint`, `offset_points`.
@@ -111,17 +111,18 @@ capitalization, such as `Front`, `Top`, and `Right`.
 
 These notes cover special behavior and current limitations. For the full
 feature API and parameter definitions, see the
-[feature modules](../src/dahlia/features/).
+[feature modules](../src/dahlia/sldwrks/features/).
 
 ### Ribs
 
-`rib(sketch=..., thickness=...)` grows a rib parallel to its driving sketch.
-Use `direction="NormalToSketch"` to grow it normal to the sketch and
-`extension="Natural"` for natural profile extension. `two_sided=False` and
-`reverse_thickness=True` select a single thickness side; `flipped` selects the
-material direction. `draft_angle`, `draft_outward`, and `draft_from_wall`
-control draft. `reference_segment` is the zero-based sketch segment used for
-material/draft direction; `body` optionally selects the target body.
+`rib(sketch=..., thickness=...)` grows a two-sided rib parallel to its driving
+sketch. `direction="NormalToSketch"` grows it normal to the sketch; add
+`{"direction": "NormalToSketch", "extension": "Natural"}` for natural profile
+extension. `sides={"sides": "OneSided", "reverse": True}` thickens one side only;
+`flipped` selects the material direction. `draft={"angle": ..., "outward": ...,
+"from_wall": ...}` adds a draft. `reference_segment` is the zero-based sketch
+segment used for material/draft direction; `body` optionally selects the target
+body.
 
 Edits support these settings. The driving sketch can be edited in place, but
 switching to a different sketch requires a new rib.
@@ -160,27 +161,34 @@ checks, not proof that SolidWorks cannot perform those edits.
 
 `loft` creates a boss loft and `cut_loft` removes material between at least two
 ordered profiles. Pass already-added Sketch objects, feature names, or typed/raw
-geometry definitions. Both share `centerline`, `guide_curves`, start/end tangency
-and direction references, tangent lengths/reversal, draft angles, guide influence,
-smoothing, and thin-wall settings. `feature_scope` selects affected bodies;
-`merge` is available only on boss lofts.
+geometry definitions. Both share `centerline`, `guide_curves`, start/end
+constraints, guide influence, smoothing, and thin-wall settings. `feature_scope`
+selects affected bodies; `merge` is available only on boss lofts.
+
+`start_constraint` / `end_constraint` take one shape per mode, carrying only the
+options that mode uses: `"None"` (no options); `NormalToProfile` with
+`tangent_length`, `reverse_tangent` and an optional `draft={"angle", "reverse"}`;
+`DirectionVector`, the same plus a required `direction`; `TangentToFace` /
+`CurvatureToFace` with `tangent_length` and `reverse_tangent`. A bare mode name
+uses that mode's defaults.
 
 ```python
 from dahlia import loft, cut_loft
 
 f.add_feature(loft(profiles=["BaseSection", "EndSection"], name="Transition"))
-f.add_feature(cut_loft(profiles=["Inlet", "Outlet"], name="Bore"))
+f.add_feature(cut_loft(profiles=["Inlet", "Outlet"], name="Bore",
+                       start_constraint={"tangency": "NormalToProfile", "tangent_length": 0.6}))
 ```
 
-Thin lofts use `thin_feature=True`, `thin_thickness`, and `thin_wall_type`:
-`OneDirection`, `OppositeDirection`, `MidPlane`, or `TwoDirections`. The last
-also requires `thin_thickness2`. Thin cut edits drive the native wall dimensions
+Thin lofts pass `thin={"wall_type": ..., "thickness": ...}` with a wall type of
+`OneDirection`, `OppositeDirection`, `MidPlane`, or `TwoDirections`; the last also
+takes `thickness2`. A centerline is `centerline={"curve": ..., "sections": ...}`,
+the section count being the cross sections interpolated along it. Thin cut edits drive the native wall dimensions
 because SolidWorks' feature-data thickness setter can leave geometry unchanged.
 Renamed native wall dimensions are not supported. Switching between solid and
-thin requires a new feature. The native apply-to-all constraint setters are
-unimplemented, so `start_apply_to_all=True` and `end_apply_to_all=True` are rejected.
-Inspection preserves the native apply-to-all values; replaying an existing model
-that requires them fails explicitly. Replacing guide-curve references is not
+thin requires a new feature. SolidWorks' "apply to all" constraint option is
+read-only through its API, so inspection reports it as `echo_apply_to_all` and it
+cannot be authored. Replacing guide-curve references is not
 verified, and clearing an existing centerline raises an error.
 Cut-loft fragments are retained; the separate
 `drop_bodies` workflow is currently supported by the other cut types.
@@ -206,9 +214,9 @@ support `geometry_pattern`, `scope` (`AllBodies`, `AutoSelect`, `SelectedBodies`
 and `feature_scope` body definitions. Body mirrors support `merge` and
 `knit_surfaces`. Both support `propagate_visual_properties`.
 SolidWorks resolves `AutoSelect` to `SelectedBodies` with an explicit body list
-during a full rebuild. Inspect and generated transcripts preserve that resolved scope.
+during a full rebuild. Inspect preserves that resolved scope.
 
-Add, inspect, edit, and transcript replay use the same model. Changing or removing
+Add, inspect, and edit use the same model. Changing or removing
 the secondary plane preserves the native feature's name. Structure-system seeds,
 assembly mirrors, and derived mirrored parts are outside this part-feature API.
 

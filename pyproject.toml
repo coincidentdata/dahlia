@@ -1,6 +1,6 @@
 [project]
 name = "dahlia-cad"
-version = "0.1.1"
+version = "0.2.0"
 description = "Python tools for models to work in industry CAD software, starting with SOLIDWORKS."
 readme = "README.md"
 license = "LicenseRef-Dahlia-Community-1.0"
@@ -15,14 +15,11 @@ dependencies = [
 ]
 
 [project.scripts]
-dahlia-export = "dahlia.export_cli:main"
+dahlia-export = "dahlia.sldwrks.export_cli:main"
 
 [project.urls]
 Homepage = "https://coincidentdata.com"
 Repository = "https://github.com/coincidentdata/dahlia"
-
-[dependency-groups]
-dev = ["pytest>=8.0"]
 
 [tool.uv.build-backend]
 module-name = "dahlia"

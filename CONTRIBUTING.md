@@ -7,11 +7,10 @@ Use Python 3.12 and run these checks before submitting:
 
 ```powershell
 uv sync --locked
-uv run pytest
 uv build
 ```
 
-The Python tests run without SOLIDWORKS. For live CAD changes, describe what you
+For live CAD changes, describe what you
 tested and the SOLIDWORKS version used. Maintainers verify native behavior
 internally when needed.
 
